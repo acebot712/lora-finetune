@@ -1,4 +1,10 @@
-# lora-finetune
+# Fine-Tuning StableDiffusion with LoRA on custom dataset
+
+
+<figure>
+  <img src="generated_sample.png" alt="Generated Sample" style="width:100%">
+  <figcaption>Fig.1 - Generated Sample after finetuning SD with LoRA.</figcaption>
+</figure>
 
 Using this repository, you should be able to create your own LoRA models that you can upload to [CivitAI](https://civitai.com/) without using [Automatic1111](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
 
