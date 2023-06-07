@@ -2,7 +2,7 @@
 
 
 <figure>
-  <img src="generated_sample.png" alt="Generated Sample" style="width:100%">
+  <img src="https://res.cloudinary.com/dyjvkjts4/image/upload/v1686152045/generated_sample_xjgsxy.png" alt="Generated Sample" style="width:100%">
   <figcaption>Fig.1 - Generated Sample after finetuning SD with LoRA.</figcaption>
 </figure>
 
