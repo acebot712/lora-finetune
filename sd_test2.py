@@ -8,5 +8,5 @@ pipe.unet.load_attn_procs("arkayoji/waifu-lora")
 # pipe.safety_checker = lambda images, clip_input: (images, False)
 pipe = pipe.to("cuda")
 
-image = pipe("a beautiful girl with cleavage smiling", num_inference_steps=200).images[0]
+image = pipe("a woman with blue eyes on the beach smiling", num_inference_steps=200).images[0]
 image.save("green_pokemon.png")

@@ -16,8 +16,6 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = model.to(device)
 
 directory_paths = [
-    # "HQ_512x512/HQ_512x512/",
-    # "DataSet/train/nsfw/",
     "bella/"
     # Add more directory paths here
 ]
