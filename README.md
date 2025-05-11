@@ -1,3 +1,52 @@
+# 10x LoRA Fine-Tuning & Inference Platform
+
+A hackathon-ready, Silicon Valley-grade platform for fine-tuning and deploying Stable Diffusion with LoRA adapters—now with a beautiful web UI, one-click workflows, and blazing-fast inference.
+
+## 🚀 Features
+- **Gradio Web UI**: Upload images, auto-caption, train, and generate images—all in your browser.
+- **One-Click Data Prep**: Auto-captioning and dataset creation from your images.
+- **Model Zoo**: Choose from popular base models (SD 1.5, SDXL, etc.) and community LoRA weights.
+- **LoRA Merging & Dynamic Strength**: Combine adapters and adjust their influence at inference time.
+- **Prompt Engineering Tools**: Prompt generator, negative prompts, and completions.
+- **Batch & Fast Inference**: ONNX/TensorRT export, batch image generation, and streaming data support.
+- **Docker & pip install**: Run anywhere, deploy instantly.
+- **Continuous Integration**: Linting, testing, and deployment with GitHub Actions.
+- **Colab/Notebook Tutorials**: Step-by-step guides for every workflow.
+- **API & Mobile Ready**: REST API and mobile app starter included.
+
+## 🏁 Quickstart
+
+```bash
+# 1. Install (pip or Docker)
+pip install -r requirements.txt
+# or
+docker build -t lora-finetune .
+
+# 2. Launch the Web UI
+python scripts/run_app.py
+# or
+docker run -p 7860:7860 lora-finetune
+```
+
+## 🖼️ Demo
+- Upload images, auto-caption, and train a LoRA in minutes
+- Generate images with your custom LoRA, adjust strength, and merge adapters
+- Try community LoRAs and base models from the Model Zoo
+
+## 📚 Documentation
+- [Tutorials & Notebooks](notebooks/)
+- [API Reference](docs/)
+- [Contributing](CONTRIBUTING.md)
+
+## 🏆 Built for Hackathons & Demos
+- Lightning-fast, beautiful, and robust
+- Designed to impress at any event or pitch
+- **Production-grade modular structure**: All logic is split into `lora_finetune/` modules for data, training, inference, UI, and utilities.
+
+---
+
+For more, see the full docs or launch the app and explore!
+
 # Fine-Tuning StableDiffusion with LoRA on custom dataset
 
 

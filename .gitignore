@@ -289,3 +289,35 @@ pyrightconfig.json
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,database,dotenv,data,spreadsheet,images
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+
+# Testing
+.pytest_cache/
+.mypy_cache/
+
+# Editors
+.vscode/
+.idea/
+
+# Gradio
+*.gradio/
+
+# Docker
+*.docker
+*.tar
+
+# Misc
+*.log

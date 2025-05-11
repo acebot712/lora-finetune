@@ -160,3 +160,10 @@ xxhash==3.2.0
 yarl==1.9.2
 zipp==3.15.0
 zstandard==0.19.0
+gradio==4.25.0
+streamlit==1.35.0
+torchdata==0.7.1
+webdataset==0.2.86
+onnxruntime==1.17.3
+pytest==8.2.1
+pre-commit==3.7.0
