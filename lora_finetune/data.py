@@ -21,12 +21,32 @@ def upload_images(files: List) -> Tuple[str, str]:
         temp_dir: Path to directory with saved images
         status: Status message
     """
+    if not files:
+        return "", "Error: No files provided"
+
     temp_dir = tempfile.mkdtemp()
+    successful = 0
+    failed = 0
+
     for file in files:
-        img = Image.open(file.name)
-        img.save(os.path.join(temp_dir, os.path.basename(file.name)))
-    logger.info(f"Uploaded {len(files)} images to {temp_dir}")
-    return temp_dir, f"Uploaded {len(files)} images."
+        try:
+            img = Image.open(file.name)
+            img.save(os.path.join(temp_dir, os.path.basename(file.name)))
+            successful += 1
+        except Exception as e:
+            logger.warning(f"Failed to process {file.name}: {e}")
+            failed += 1
+
+    logger.info(f"Uploaded {successful} images to {temp_dir}")
+
+    if successful == 0:
+        return "", f"Error: Failed to upload all {len(files)} images"
+
+    status = f"Uploaded {successful} images."
+    if failed > 0:
+        status += f" ({failed} failed)"
+
+    return temp_dir, status
 
 
 def auto_caption_images(image_dir: str) -> Tuple[str, str]:
@@ -38,13 +58,31 @@ def auto_caption_images(image_dir: str) -> Tuple[str, str]:
         dataset_dir: Path to saved dataset
         preview: Markdown table of image paths and captions
     """
-    processor = AutoProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
-    model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model = model.to(device)
+    if not image_dir or not os.path.exists(image_dir):
+        return "", f"Error: Directory '{image_dir}' does not exist"
+
+    try:
+        logger.info("Loading BLIP model...")
+        processor = AutoProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
+        model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        model = model.to(device)
+    except Exception as e:
+        logger.error(f"Failed to load BLIP model: {e}")
+        return "", f"Error: Failed to load BLIP model: {e}"
+
     image_files = glob.glob(os.path.join(image_dir, '*'))
+    # Filter only image files
+    image_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.gif', '.webp'}
+    image_files = [f for f in image_files if os.path.splitext(f)[1].lower() in image_extensions]
+
+    if not image_files:
+        return "", f"Error: No image files found in {image_dir}"
+
     captions = []
     images = []
+    failed = 0
+
     for file in image_files:
         try:
             image = Image.open(file)
@@ -56,11 +94,22 @@ def auto_caption_images(image_dir: str) -> Tuple[str, str]:
             images.append(file)
         except Exception as e:
             logger.warning(f"Failed to caption {file}: {e}")
+            failed += 1
             continue
+
+    if not captions:
+        return "", "Error: Failed to caption any images"
+
     df = pd.DataFrame({"image": images, "text": captions})
     dataset = Dataset.from_dict({"image": images, "text": captions})
     dataset_dict = DatasetDict({"train": dataset})
     dataset_dir = os.path.join(image_dir, "dataset")
     dataset_dict.save_to_disk(dataset_dir)
+
     logger.info(f"Auto-captioned {len(images)} images. Dataset saved to {dataset_dir}")
-    return dataset_dir, df.to_markdown() 
+
+    status = f"Captioned {len(images)} images"
+    if failed > 0:
+        status += f" ({failed} failed)"
+
+    return dataset_dir, df.to_markdown() + f"\n\n{status}" 

@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 def build_ui():
     """Build and return the Gradio Blocks UI for the LoRA fine-tuning platform."""
     with gr.Blocks() as demo:
-        gr.Markdown("# 10x LoRA Fine-Tuning & Inference Platform 🚀")
+        gr.Markdown("# LoRA Fine-Tuning for Stable Diffusion")
         with gr.Tab("1. Upload Images"):
             image_upload = gr.File(file_count="multiple", type="file", label="Upload Images")
             upload_btn = gr.Button("Upload")
@@ -44,5 +44,4 @@ def build_ui():
                 inputs=[base_model_inf, lora_model_inf, prompt, lora_alpha, steps, seed],
                 outputs=[output_img],
             )
-        gr.Markdown("---\nBuilt for hackathons, demos, and rapid innovation.")
     return demo 
